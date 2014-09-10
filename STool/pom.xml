@@ -25,6 +25,12 @@
 			<timezone>+8</timezone>
 		</developer>
 	</developers>
+	
+	<scm>
+		<connection>scm:git:git@git.oschina.net:songxinqiang/stool.git</connection>
+		<developerConnection>scm:git:git@git.oschina.net:songxinqiang/stool.git</developerConnection>
+		<url>git@git.oschina.net:songxinqiang/stool.git</url>
+	</scm>
 
 	<properties>
 
