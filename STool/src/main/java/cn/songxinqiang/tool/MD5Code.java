@@ -1,5 +1,3 @@
-package cn.songxinqiang.tool;
-
 /*
  * Copyright 2014 阿信(songxinqiang@vip.qq.com)
  * 
@@ -7,7 +5,7 @@ package cn.songxinqiang.tool;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *		http://www.apache.org/licenses/LICENSE-2.0
+ * 		http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +13,8 @@ package cn.songxinqiang.tool;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package cn.songxinqiang.tool;
 
 /**
  * 生成md5密码工具类 源代码源于网络，根据提供的字符串生成对应的md5加密字符串，生成的字符串32位

@@ -1,13 +1,11 @@
-package cn.songxinqiang.tool;
-
-/*
+/**
  * Copyright 2014 阿信(songxinqiang@vip.qq.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *		http://www.apache.org/licenses/LICENSE-2.0
+ * 		http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +13,8 @@ package cn.songxinqiang.tool;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package cn.songxinqiang.tool;
 
 import java.util.Arrays;
 
@@ -26,11 +26,14 @@ import java.util.Arrays;
  *
  */
 public class RandomCode {
+
 	/**
 	 * 验证码难度级别，Simple只包含数字，Medium包含数字和小写英文，Hard包含数字和大小写英文
 	 */
 	public enum SecurityCodeLevel {
-		Simple, Medium, Hard
+		Simple,
+		Medium,
+		Hard
 	};
 
 	// 字符集合(除去易混淆的数字0、数字1、字母l、字母o、字母O)
@@ -70,21 +73,21 @@ public class RandomCode {
 
 		// 根据不同的难度截取字符数组
 		switch (level) {
-		case Simple: {
-			code = Arrays.copyOfRange(CHAR_CODE, 0, 9);
-			break;
-		}
-		case Medium: {
-			code = Arrays.copyOfRange(CHAR_CODE, 0, 33);
-			break;
-		}
-		case Hard: {
-			code = Arrays.copyOfRange(CHAR_CODE, 0, CHAR_CODE.length);
-			break;
-		}
-		default: {
-			code = Arrays.copyOfRange(CHAR_CODE, 0, CHAR_CODE.length);
-		}
+			case Simple: {
+				code = Arrays.copyOfRange(CHAR_CODE, 0, 9);
+				break;
+			}
+			case Medium: {
+				code = Arrays.copyOfRange(CHAR_CODE, 0, 33);
+				break;
+			}
+			case Hard: {
+				code = Arrays.copyOfRange(CHAR_CODE, 0, CHAR_CODE.length);
+				break;
+			}
+			default: {
+				code = Arrays.copyOfRange(CHAR_CODE, 0, CHAR_CODE.length);
+			}
 		}
 
 		// 字符集合长度
