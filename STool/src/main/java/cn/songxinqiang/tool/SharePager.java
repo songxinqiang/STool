@@ -19,8 +19,7 @@ package cn.songxinqiang.tool;
 /**
  * 一个分页的工具类
  * 
- * @author 宋信强--2014年9月10日
- * @mail songxinqiang@vip.qq.com
+ * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
  *
  */
 public class SharePager {
@@ -28,8 +27,7 @@ public class SharePager {
 	/**
 	 * 分页操作动作枚举
 	 * 
-	 * @author 宋信强--2014年9月10日
-	 * @mail cn.songxinqiang@gmail.com
+	 * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
 	 *
 	 */
 	public enum PagerAction {

@@ -30,8 +30,7 @@ import javax.imageio.ImageIO;
 /**
  * 验证码图片生成，可指定图片的尺寸和干扰线等参数
  * 
- * @author 宋信强--2014年9月10日
- * @mail song_xinqiang@qq.com
+ * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
  *
  */
 public class RandomImage {

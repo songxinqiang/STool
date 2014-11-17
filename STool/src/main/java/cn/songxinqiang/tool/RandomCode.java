@@ -21,8 +21,7 @@ import java.util.Arrays;
 /**
  * 生成随机验证码，可控制难度
  * 
- * @author 宋信强--2014年9月10日
- * @mail song_xinqiang@qq.com
+ * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
  *
  */
 public class RandomCode {

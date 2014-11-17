@@ -19,8 +19,7 @@ package cn.songxinqiang.tool;
 /**
  * 生成md5密码工具类 源代码源于网络，根据提供的字符串生成对应的md5加密字符串，生成的字符串32位
  * 
- * @author 宋信强--2014年9月10日
- * @mail song_xinqiang@qq.com
+ * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
  *
  */
 public class MD5Code {
