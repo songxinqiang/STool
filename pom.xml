@@ -4,15 +4,15 @@
 
 	<parent>
 		<groupId>cn.songxinqiang</groupId>
-		<artifactId>oss-parent-java7</artifactId>
-		<version>1.0</version>
+		<artifactId>oss-parent</artifactId>
+		<version>1.4</version>
 	</parent>
 	<artifactId>stool</artifactId>
 	<version>1.0.4</version>
 
 	<name>ssongxinqiang-tool</name>
 	<description>This is a tool lib for Java to develop</description>
-	<url>http://songxinqiang.cn/</url>
+	<url>https://git.oschina.net/songxinqiang/STool</url>
 
 	<licenses>
 		<license>
@@ -31,9 +31,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git@git.oschina.net:songxinqiang/stool.git</connection>
-		<developerConnection>scm:git:git@git.oschina.net:songxinqiang/stool.git</developerConnection>
-		<url>git@git.oschina.net:songxinqiang/stool.git</url>
+		<connection>scm:git:ssh://git@git.oschina.net/songxinqiang/STool.git</connection>
+		<developerConnection>scm:git:ssh://git@git.oschina.net/songxinqiang/STool.git</developerConnection>
+		<url>https://git.oschina.net/songxinqiang/STool</url>
 	</scm>
 
 	<properties>
