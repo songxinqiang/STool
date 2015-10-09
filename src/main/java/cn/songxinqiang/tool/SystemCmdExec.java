@@ -41,75 +41,75 @@ import java.util.List;
  */
 public class SystemCmdExec {
 
-	private static final Runtime run;
+    private static final Runtime run;
 
-	static {
-		run = Runtime.getRuntime();
-	}
+    static {
+        run = Runtime.getRuntime();
+    }
 
-	/**
-	 * 执行系统命令，返回执行是否成功
-	 * 
-	 * @author 阿信sxq-2015年8月30日
-	 * @param cmd
-	 *            命令
-	 * @return 仅当操作成功返回true
-	 */
-	public boolean runCmd(String cmd) {
-		boolean flag = false;
+    /**
+     * 执行系统命令，返回执行是否成功
+     * 
+     * @author 阿信sxq-2015年8月30日
+     * @param cmd
+     *            命令
+     * @return 仅当操作成功返回true
+     */
+    public boolean runCmd(String cmd) {
+        boolean flag = false;
 
-		try {
-			run.exec(cmd);
-			flag = true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag = false;
-		}
-		return flag;
-	}
+        try {
+            run.exec(cmd);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+        }
+        return flag;
+    }
 
-	/**
-	 * 执行系统命令返回结果字符串，结果按照一行一个字符串的形式封装为一个列表<br>
-	 * 该方法会产生阻塞，等待执行结束后才会返回
-	 * 
-	 * @author 阿信sxq-2015年8月30日
-	 * @param cmd
-	 *            命令
-	 * @return 命令所产生的所有输出，等到输出完成后才会返回
-	 */
-	public List<String> runCmdForString(String cmd) {
-		List<String> strList = new ArrayList<String>();
+    /**
+     * 执行系统命令返回结果字符串，结果按照一行一个字符串的形式封装为一个列表<br>
+     * 该方法会产生阻塞，等待执行结束后才会返回
+     * 
+     * @author 阿信sxq-2015年8月30日
+     * @param cmd
+     *            命令
+     * @return 命令所产生的所有输出，等到输出完成后才会返回
+     */
+    public List<String> runCmdForString(String cmd) {
+        List<String> strList = new ArrayList<String>();
 
-		BufferedInputStream in = null;
-		BufferedReader inBr = null;
-		try {
-			Process p = run.exec(cmd);
-			in = new BufferedInputStream(p.getInputStream());
-			inBr = new BufferedReader(new InputStreamReader(in, "gb2312"));
-			String lineStr = null;
-			while ((lineStr = inBr.readLine()) != null) {
-				strList.add(lineStr);
-			}
-			p = null;
-			lineStr = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (inBr != null) {
-				try {
-					inBr.close();
-				} catch (IOException e) {}
-			}
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {}
-			}
-			inBr = null;
-			in = null;
-		}
+        BufferedInputStream in = null;
+        BufferedReader inBr = null;
+        try {
+            Process p = run.exec(cmd);
+            in = new BufferedInputStream(p.getInputStream());
+            inBr = new BufferedReader(new InputStreamReader(in, "gb2312"));
+            String lineStr = null;
+            while ((lineStr = inBr.readLine()) != null) {
+                strList.add(lineStr);
+            }
+            p = null;
+            lineStr = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (inBr != null) {
+                try {
+                    inBr.close();
+                } catch (IOException e) {}
+            }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {}
+            }
+            inBr = null;
+            in = null;
+        }
 
-		return strList;
-	}
+        return strList;
+    }
 
 }

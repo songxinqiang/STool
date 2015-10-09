@@ -1,43 +1,45 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>cn.songxinqiang</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>1.4</version>
-	</parent>
-	<artifactId>stool</artifactId>
-	<version>1.0.4</version>
+    <parent>
+        <groupId>cn.songxinqiang</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>1.4</version>
+    </parent>
+    <artifactId>stool</artifactId>
+    <version>1.0.4</version>
 
-	<name>ssongxinqiang-tool</name>
-	<description>This is a tool lib for Java to develop</description>
-	<url>https://git.oschina.net/songxinqiang/STool</url>
+    <name>ssongxinqiang-tool</name>
+    <description>This is a tool lib for Java to develop</description>
+    <url>https://git.oschina.net/songxinqiang/STool</url>
 
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
-	<developers>
-		<developer>
-			<name>宋信强</name>
-			<email>songxinqiang@vip.qq.com</email>
-			<url>http://my.oschina.net/songxinqiang/</url>
-			<timezone>+8</timezone>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>宋信强</name>
+            <email>songxinqiang@vip.qq.com</email>
+            <url>http://my.oschina.net/songxinqiang/</url>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
-	<scm>
-		<connection>scm:git:ssh://git@git.oschina.net/songxinqiang/STool.git</connection>
-		<developerConnection>scm:git:ssh://git@git.oschina.net/songxinqiang/STool.git</developerConnection>
-		<url>https://git.oschina.net/songxinqiang/STool</url>
-	</scm>
+    <scm>
+        <connection>scm:git:git@git.oschina.net:songxinqiang/STool.git</connection>
+        <developerConnection>scm:git:git@git.oschina.net:songxinqiang/STool.git</developerConnection>
+        <url>https://git.oschina.net/songxinqiang/STool</url>
+    </scm>
 
-	<properties>
+    <properties>
 
-	</properties>
+    </properties>
 
 </project>

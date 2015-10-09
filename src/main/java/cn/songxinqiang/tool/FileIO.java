@@ -43,114 +43,114 @@ import java.util.List;
  */
 public class FileIO {
 
-	/**
-	 * 按照行读取文件，得到的文件内容列表保留文件中的顺序
-	 *
-	 * @author 阿信sxq-2015年8月30日
-	 *
-	 * @param file
-	 *            需要读取的文件
-	 * @return 文件内容的列表
-	 */
-	public static LinkedList<String> readLine(File file) {
-		LinkedList<String> list = new LinkedList<String>();
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(file));
-			String rstr = null;
-			while ((rstr = reader.readLine()) != null) {
-				list.add(rstr);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) {
-					reader.close();
-				}
-			} catch (IOException e) {}
-		}
-		return list;
-	}
+    /**
+     * 按照行读取文件，得到的文件内容列表保留文件中的顺序
+     *
+     * @author 阿信sxq-2015年8月30日
+     *
+     * @param file
+     *            需要读取的文件
+     * @return 文件内容的列表
+     */
+    public static LinkedList<String> readLine(File file) {
+        LinkedList<String> list = new LinkedList<String>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String rstr = null;
+            while ((rstr = reader.readLine()) != null) {
+                list.add(rstr);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {}
+        }
+        return list;
+    }
 
-	/**
-	 * 读取文件内容，传入的字符串参数是文件的完整路径描述，将用于创建{@code File}的对象，调用本方法和调用<br>
-	 * {@code FileIO.readLine(new File(file));}<br>
-	 * 是一样的的
-	 *
-	 * @author 阿信sxq-2015年8月30日
-	 *
-	 * @param file
-	 *            文件的路径描述
-	 * @return 文件的内容
-	 */
-	public static LinkedList<String> readLine(String file) {
-		return readLine(new File(file));
-	}
+    /**
+     * 读取文件内容，传入的字符串参数是文件的完整路径描述，将用于创建{@code File}的对象，调用本方法和调用<br>
+     * {@code FileIO.readLine(new File(file));}<br>
+     * 是一样的的
+     *
+     * @author 阿信sxq-2015年8月30日
+     *
+     * @param file
+     *            文件的路径描述
+     * @return 文件的内容
+     */
+    public static LinkedList<String> readLine(String file) {
+        return readLine(new File(file));
+    }
 
-	/**
-	 * 按照一次一行的方式写文件<br>
-	 * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符
-	 * ，使用{@code System.getProperty("line.separator");}获取。
-	 *
-	 * @author 阿信sxq-2015年8月30日
-	 *
-	 * @param file
-	 *            要写入到的文件的路径描述
-	 * @param content
-	 *            文件内容
-	 * @see FileWriter#write(String)
-	 */
-	public static void writeFile(String file, List<String> content) {
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(file);
-			for (String line : content) {
-				writer.write(line);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (writer != null) {
-					writer.close();
-				}
-			} catch (IOException e) {}
-		}
-	}
+    /**
+     * 按照一次一行的方式写文件<br>
+     * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符
+     * ，使用{@code System.getProperty("line.separator");}获取。
+     *
+     * @author 阿信sxq-2015年8月30日
+     *
+     * @param file
+     *            要写入到的文件的路径描述
+     * @param content
+     *            文件内容
+     * @see FileWriter#write(String)
+     */
+    public static void writeFile(String file, List<String> content) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            for (String line : content) {
+                writer.write(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {}
+        }
+    }
 
-	/**
-	 * 读取并处理文本文件中的内容<br>
-	 * 将文件中的内容按照一行一行的方式读取，然后将每一行按照{@code regex}
-	 * 所指定的正则表达式的方式进行拆分，在返回的列表中会保留文本内容在原文件的顺序，相当于使用类似二维数组的方式返回结果.<br>
-	 * <b>注意：</b>{@code regex}应该是一个正则表达式，这将直接应用于对
-	 * {@linkplain String#split(String)}的调用
-	 *
-	 * @author 阿信sxq-2015年8月30日
-	 *
-	 * @param file
-	 *            要读取的文本文件
-	 * @param regex
-	 *            拆分行所使用的正则表达式
-	 * @return 文件中的内容
-	 * @see String#split(String) 拆分字符串
-	 * @see #readLine(File) 读取文件内容
-	 */
-	public static LinkedHashMap<Integer, LinkedList<String>> parseFile(File file, String regex) {
-		LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<Integer, LinkedList<String>>();
-		LinkedList<String> fileStr = FileIO.readLine(file);
-		for (int i = 0; i < fileStr.size(); i++) {
-			LinkedList<String> list = new LinkedList<String>();
-			String[] strs = fileStr.get(i).split(regex);
-			for (String str : strs) {
-				list.add(str);
-			}
-			map.put(i, list);
-		}
+    /**
+     * 读取并处理文本文件中的内容<br>
+     * 将文件中的内容按照一行一行的方式读取，然后将每一行按照{@code regex}
+     * 所指定的正则表达式的方式进行拆分，在返回的列表中会保留文本内容在原文件的顺序，相当于使用类似二维数组的方式返回结果.<br>
+     * <b>注意：</b>{@code regex}应该是一个正则表达式，这将直接应用于对
+     * {@linkplain String#split(String)}的调用
+     *
+     * @author 阿信sxq-2015年8月30日
+     *
+     * @param file
+     *            要读取的文本文件
+     * @param regex
+     *            拆分行所使用的正则表达式
+     * @return 文件中的内容
+     * @see String#split(String) 拆分字符串
+     * @see #readLine(File) 读取文件内容
+     */
+    public static LinkedHashMap<Integer, LinkedList<String>> parseFile(File file, String regex) {
+        LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<Integer, LinkedList<String>>();
+        LinkedList<String> fileStr = FileIO.readLine(file);
+        for (int i = 0; i < fileStr.size(); i++) {
+            LinkedList<String> list = new LinkedList<String>();
+            String[] strs = fileStr.get(i).split(regex);
+            for (String str : strs) {
+                list.add(str);
+            }
+            map.put(i, list);
+        }
 
-		return map;
-	}
+        return map;
+    }
 
 }
