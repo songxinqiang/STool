@@ -92,11 +92,9 @@ public class RandomCode {
 
         // 抛出运行时异常
         if (len > n && isCanRepeat == false) {
-            throw new RuntimeException(
-                    String.format(
-                            "调用SecurityCode.getSecurityCode(%1$s,%2$s,%3$s)出现异常，"
-                                    + "当isCanRepeat为%3$s时，传入参数%1$s不能大于%4$s",
-                            len, level, isCanRepeat, n));
+            throw new RuntimeException(String.format(
+                    "调用SecurityCode.getSecurityCode(%1$s,%2$s,%3$s)出现异常，"
+                            + "当isCanRepeat为%3$s时，传入参数%1$s不能大于%4$s", len, level, isCanRepeat, n));
         }
         // 存放抽取出来的字符
         char[] result = new char[len];

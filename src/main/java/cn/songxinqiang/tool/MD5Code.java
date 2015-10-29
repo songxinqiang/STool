@@ -22,7 +22,7 @@ package cn.songxinqiang.tool;
  * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
  *
  */
-public class MD5Code {
+public final class MD5Code {
 
     private static final int S11 = 7;
     private static final int S12 = 12;

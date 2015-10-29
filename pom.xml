@@ -1,13 +1,11 @@
-<project
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>cn.songxinqiang</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>1.4</version>
+        <version>1.5</version>
     </parent>
     <artifactId>stool</artifactId>
     <version>1.0.4</version>
@@ -39,7 +37,16 @@
     </scm>
 
     <properties>
-
+        <version.tomcat>8.0.28</version.tomcat>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>${version.tomcat}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

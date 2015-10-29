@@ -1,13 +1,13 @@
 /**
  * <pre>
  * Copyright 2014,2015 阿信sxq(songxinqiang@vip.qq.com).
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,6 +44,15 @@ import java.util.List;
 public class FileIO {
 
     /**
+     * 行分隔符，针对不同的操作系统在类加载时进行读取系统属性值确定
+     */
+    private static final String LINE_SEPARATOR;
+
+    static {
+        LINE_SEPARATOR = System.getProperty("line.separator");
+    }
+
+    /**
      * 按照行读取文件，得到的文件内容列表保留文件中的顺序
      *
      * @author 阿信sxq-2015年8月30日
@@ -52,7 +61,7 @@ public class FileIO {
      *            需要读取的文件
      * @return 文件内容的列表
      */
-    public static LinkedList<String> readLine(File file) {
+    public static final LinkedList<String> readLine(File file) {
         LinkedList<String> list = new LinkedList<String>();
         BufferedReader reader = null;
         try {
@@ -86,16 +95,17 @@ public class FileIO {
      *            文件的路径描述
      * @return 文件的内容
      */
-    public static LinkedList<String> readLine(String file) {
+    public static final LinkedList<String> readLine(String file) {
         return readLine(new File(file));
     }
 
     /**
      * 按照一次一行的方式写文件<br>
-     * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符
+     * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。
+     * 文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符
      * ，使用{@code System.getProperty("line.separator");}获取。
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 宋信强-2015年10月29日
      *
      * @param file
      *            要写入到的文件的路径描述
@@ -103,13 +113,40 @@ public class FileIO {
      *            文件内容
      * @see FileWriter#write(String)
      */
-    public static void writeFile(String file, List<String> content) {
+    public static final void writeFile(String file, List<String> content) {
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
             for (String line : content) {
-                writer.write(line);
+                writer.write(line + LINE_SEPARATOR);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {}
+        }
+    }
+
+    /**
+     * 向文件中写入文本内容，会冲掉原本文件中的所有内容，如果文件不存在则会创建该文件
+     *
+     * @author 宋信强-2015年10月28日
+     *
+     * @param file
+     *            写入的目标文件
+     * @param content
+     *            需要写入到文件中的内容
+     * @see FileWriter#write(String)
+     */
+    public static final void writeFile(String file, String content) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+            writer.write(content);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -138,7 +175,7 @@ public class FileIO {
      * @see String#split(String) 拆分字符串
      * @see #readLine(File) 读取文件内容
      */
-    public static LinkedHashMap<Integer, LinkedList<String>> parseFile(File file, String regex) {
+    public static final LinkedHashMap<Integer, LinkedList<String>> parseFile(File file, String regex) {
         LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<Integer, LinkedList<String>>();
         LinkedList<String> fileStr = FileIO.readLine(file);
         for (int i = 0; i < fileStr.size(); i++) {

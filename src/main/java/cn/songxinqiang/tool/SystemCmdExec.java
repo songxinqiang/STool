@@ -39,12 +39,34 @@ import java.util.List;
  * @author 阿信sxq-2015年8月30日
  *
  */
-public class SystemCmdExec {
+public final class SystemCmdExec {
 
     private static final Runtime run;
 
     static {
         run = Runtime.getRuntime();
+    }
+
+    /**
+     * 用于保存实例
+     *
+     * @author 阿信sxq-2015年10月28日
+     *
+     */
+    private static class InstanceHolder {
+
+        private static SystemCmdExec instance = new SystemCmdExec();
+    }
+
+    /**
+     * 提供实例，用于非spring环境
+     *
+     * @author 阿信sxq-2015年10月28日
+     *
+     * @return 本类的实例
+     */
+    public static SystemCmdExec getInstance() {
+        return InstanceHolder.instance;
     }
 
     /**
@@ -55,7 +77,7 @@ public class SystemCmdExec {
      *            命令
      * @return 仅当操作成功返回true
      */
-    public boolean runCmd(String cmd) {
+    public final boolean runCmd(String cmd) {
         boolean flag = false;
 
         try {
@@ -77,7 +99,7 @@ public class SystemCmdExec {
      *            命令
      * @return 命令所产生的所有输出，等到输出完成后才会返回
      */
-    public List<String> runCmdForString(String cmd) {
+    public final List<String> runCmdForString(String cmd) {
         List<String> strList = new ArrayList<String>();
 
         BufferedInputStream in = null;

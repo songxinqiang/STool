@@ -57,15 +57,25 @@ public class SharePager {
         nought
     };
 
-    // 总行数
+    /**
+     * 总行数
+     */
     private int totalRow;
-    // 每页显示的行数
+    /**
+     * 每页显示的行数
+     */
     private int pageSize;
-    // 当前页号
+    /**
+     * 当前页号
+     */
     private int currentPage;
-    // 总页数
+    /**
+     * 总页数
+     */
     private int totalPage;
-    // 当前页在数据库中的起始行
+    /**
+     * 当前页在数据库中的起始行
+     */
     private int startRow;
 
     /**
@@ -134,7 +144,7 @@ public class SharePager {
     /**
      * 跳转到指定页,若指定的页码小于0则到首页，若大于总页数则到最后一页
      * 
-     * @param currentPage
+     * @param gotoPage
      *            跳转到的页码
      */
     public void jump(int gotoPage) {
@@ -161,7 +171,7 @@ public class SharePager {
     /**
      * 获取总页数
      * 
-     * @return
+     * @return 总页码
      */
     public int getTotalPage() {
         return totalPage;
@@ -170,7 +180,7 @@ public class SharePager {
     /**
      * 获取当前页码
      * 
-     * @return
+     * @return 当前页码
      */
     public int getCurrentPage() {
         return currentPage;
@@ -179,7 +189,7 @@ public class SharePager {
     /**
      * 获取每一页的记录数
      * 
-     * @return
+     * @return 每一页的记录数
      */
     public int getPageSize() {
         return pageSize;
@@ -188,7 +198,7 @@ public class SharePager {
     /**
      * 获取总记录数
      * 
-     * @return
+     * @return 总行数
      */
     public int getTotalRow() {
         return totalRow;
@@ -198,6 +208,7 @@ public class SharePager {
      * 设置总记录数
      * 
      * @param totalRow
+     *            总行数
      */
     public void setTotalRow(int totalRow) {
         this.totalRow = totalRow;
@@ -207,6 +218,7 @@ public class SharePager {
      * 设置开始记录编号
      * 
      * @param startRow
+     *            当前页的开始行编号
      */
     public void setStartRow(int startRow) {
         this.startRow = startRow;
@@ -216,6 +228,7 @@ public class SharePager {
      * 设置总页数
      * 
      * @param totalPage
+     *            总页码数
      */
     public void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
@@ -225,6 +238,7 @@ public class SharePager {
      * 设置当前页
      * 
      * @param currentPage
+     *            当前页码
      */
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
@@ -234,6 +248,7 @@ public class SharePager {
      * 设置每页大小
      * 
      * @param pageSize
+     *            每一页的大小
      */
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
