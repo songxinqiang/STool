@@ -10,8 +10,8 @@
     <artifactId>stool</artifactId>
     <version>1.0.4</version>
 
-    <name>ssongxinqiang-tool</name>
-    <description>This is a tool lib for Java to develop</description>
+    <name>Songxinqiang-Tool</name>
+    <description>This is a tool lib for Java to develop applications</description>
     <url>https://git.oschina.net/songxinqiang/STool</url>
 
     <licenses>
@@ -23,7 +23,7 @@
 
     <developers>
         <developer>
-            <name>宋信强</name>
+            <name>阿信sxq</name>
             <email>songxinqiang@vip.qq.com</email>
             <url>http://my.oschina.net/songxinqiang/</url>
             <timezone>+8</timezone>
