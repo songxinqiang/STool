@@ -41,7 +41,7 @@ import java.util.List;
  * @author 阿信sxq-2015年8月30日
  *
  */
-public class FileIO {
+public final class FileIO {
 
     /**
      * 行分隔符，针对不同的操作系统在类加载时进行读取系统属性值确定
@@ -102,8 +102,8 @@ public class FileIO {
     /**
      * 按照一次一行的方式写文件<br>
      * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。
-     * 文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符
-     * ，使用{@code System.getProperty("line.separator");}获取。
+     * 文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符,使用
+     * {@code System.getProperty("line.separator");}获取。
      *
      * @author 宋信强-2015年10月29日
      *

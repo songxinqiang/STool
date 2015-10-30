@@ -37,6 +37,7 @@ import java.util.Map.Entry;
  * </p>
  * 
  * @author 阿信sxq-2015年8月30日
+ * @author 阿信sxq-2015年10月30日
  *
  */
 public final class ConfFileUtil {
@@ -54,30 +55,22 @@ public final class ConfFileUtil {
      * 分隔符, 等号({@code "="})
      */
     public static final String SEPARATOR_EQUAL = "=";
-    /**
-     * 分隔符，空格({@code " "})
-     */
-    public static final String SEPARATOR_SPACE = " ";
 
     /**
      * 读取配置文件的信息，以键值对的形式返回读取到的信息<br>
      * 会忽略空行和以{@linkplain #COMMENT_LINE_START}指定内容开头的注释行， 对于由
      * {@linkplain #NODE_START}表示的字符串开头的行，将整行去掉首尾空格后作为键，
      * 值也是一个键值对的形式，这些值都是这个节点之后、下一个节点之前的配置项， 配置项采用
-     * 指定的分隔符({@code separator})进行分隔，分隔符应使用系统准备好的分隔符之一
-     * ({@linkplain #SEPARATOR_EQUAL}和{@linkplain #SEPARATOR_SPACE}),也可以使用单独指定的，
-     * 分隔符前面的部分作为键后面的部分作为值， 数据均采用 {@link LinkedHashMap}存储，会保留配置在文件中的记录顺序
+     * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔，分隔符前面的部分作为键后面的部分作为值，
+     * 数据均采用 {@link LinkedHashMap}存储，会保留配置在文件中的记录顺序
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq-2015年10月30日
      *
      * @param file
      *            文件的完整限定名
-     * @param separator
-     *            所指定的分隔符
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
-    public static final Map<String, Map<String, String>> readFileRecord(String file,
-            String separator) {
+    public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
 
@@ -91,7 +84,7 @@ public final class ConfFileUtil {
                 returnMap.put(line, valueMap);
                 continue;
             }
-            String[] strs = line.split(separator);
+            String[] strs = line.split(SEPARATOR_EQUAL);
             if (strs.length <= 1) {
                 valueMap.put(strs[0].trim(), null);
             } else {
@@ -105,20 +98,16 @@ public final class ConfFileUtil {
     /**
      * 读取配置文件的信息，将信息以键值对的形式返回<br>
      * 本方法读取的配置文件不应该包含有使用{@code []}表示出来的节点，配置项采用
-     * 指定的分隔符({@code separator})进行分隔，分隔符应使用系统准备好的分隔符之一
-     * ({@linkplain #SEPARATOR_EQUAL}和{@linkplain #SEPARATOR_SPACE}),也可以使用单独指定的，
-     * 分隔符前面的部分作为键后面的部分作为值，
+     * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔,分隔符前面的部分作为键后面的部分作为值，
      * 如果配置没有对应的值，那么会在结果的键值对记录中存储{@code null}值
      *
-     * @author 阿信sxq-2015年10月28日
+     * @author 阿信sxq-2015年10月30日
      *
      * @param file
      *            需要读取的配置文件的完整路径
-     * @param separator
-     *            所指定的分隔符
      * @return 配置文件中记录的配置信息的键值对
      */
-    public static final Map<String, String> readNoNodeFileRecord(String file, String separator) {
+    public static final Map<String, String> readFileRecordWithoutNode(String file) {
         Map<String, String> valueMap = new LinkedHashMap<String, String>();
 
         LinkedList<String> content = FileIO.readLine(file);
@@ -126,7 +115,7 @@ public final class ConfFileUtil {
             if (line.length() <= 1 || line.startsWith(COMMENT_LINE_START)) {
                 continue;
             }
-            String[] strs = line.split(separator);
+            String[] strs = line.split(SEPARATOR_EQUAL);
             if (strs.length <= 1) {
                 valueMap.put(strs[0].trim(), null);
             } else {
@@ -139,23 +128,20 @@ public final class ConfFileUtil {
 
     /**
      * 将配置信息写入到文件中，覆盖原文件信息，指定的文件若不存在会新建文件,会对节点不加处理，值会紧随键之后，
-     * 在键和值中间加入分隔符(由{@code separator}指定)，分隔符应使用系统准备好的分隔符之一
-     * ({@linkplain #SEPARATOR_EQUAL}和{@linkplain #SEPARATOR_SPACE}),也可以使用单独指定的，
+     * 在键和值中间加入分隔符，分隔符使用({@linkplain #SEPARATOR_EQUAL},
      * 在最后加入换行符(由{@code System.getProperty("line.separator");}确定)
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq-2015年10月30日
      *
      * @param file
      *            文件的完整限定名，若文件不存在会新建文件
      * @param map
      *            配置信息，键值对，值为配置详细的键值对
-     * @param separator
-     *            所指定的分隔符
      * 
      * @see FileIO#writeFile(String, List)
      */
-    public static final void writeFileRecord(String file, Map<String, Map<String, String>> map,
-            String separator) {
+    public static final void writeFileRecordWithNode(String file,
+            Map<String, Map<String, String>> map) {
         List<String> contentList = new LinkedList<>();
         for (Entry<String, Map<String, String>> entry : map.entrySet()) {
             contentList.add(entry.getKey());
@@ -163,7 +149,7 @@ public final class ConfFileUtil {
             Map<String, String> valueMap = entry.getValue();
 
             for (Entry<String, String> ent : valueMap.entrySet()) {
-                contentList.add(ent.getKey() + separator + ent.getValue());
+                contentList.add(ent.getKey() + SEPARATOR_EQUAL + ent.getValue());
             }
         }
         FileIO.writeFile(file, contentList);
@@ -171,27 +157,23 @@ public final class ConfFileUtil {
 
     /**
      * 将配置信息写入到文件中，覆盖原文件信息，指定的文件若不存在会新建文件,值会紧随键之后，
-     * 在键和值中间加入分隔符(由{@code separator}指定)，分隔符应使用系统准备好的分隔符之一
-     * ({@linkplain #SEPARATOR_EQUAL}和{@linkplain #SEPARATOR_SPACE}),也可以使用单独指定的，
+     * 在键和值中间加入分隔符，分隔符使用({@linkplain #SEPARATOR_EQUAL},
      * 在最后加入换行符(由{@code System.getProperty("line.separator");}确定)<br>
      * 本方法输出的文件不包含节点
      *
-     * @author 宋信强-2015年10月28日
+     * @author 阿信sxq-2015年10月30日
      *
      * @param file
      *            输出到的目标文件，不存在的化会新建
      * @param map
      *            需要输出到目标文件的值，输出时会保留顺序
-     * @param separator
-     *            所指定的分隔符
      * 
      * @see FileIO#writeFile(String, List) 输出到文件
      */
-    public static final void writeNoNodeFileRecord(String file, Map<String, String> map,
-            String separator) {
+    public static final void writeFileRecordWithoutNode(String file, Map<String, String> map) {
         List<String> contentList = new LinkedList<>();
         for (Entry<String, String> entry : map.entrySet()) {
-            contentList.add(entry.getKey() + separator + entry.getValue());
+            contentList.add(entry.getKey() + SEPARATOR_EQUAL + entry.getValue());
         }
         FileIO.writeFile(file, contentList);
     }
