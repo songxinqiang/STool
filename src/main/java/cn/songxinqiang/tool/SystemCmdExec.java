@@ -48,28 +48,6 @@ public final class SystemCmdExec {
     }
 
     /**
-     * 用于保存实例
-     *
-     * @author 阿信sxq-2015年10月28日
-     *
-     */
-    private static class InstanceHolder {
-
-        private static SystemCmdExec instance = new SystemCmdExec();
-    }
-
-    /**
-     * 提供实例，用于非spring环境
-     *
-     * @author 阿信sxq-2015年10月28日
-     *
-     * @return 本类的实例
-     */
-    public static SystemCmdExec getInstance() {
-        return InstanceHolder.instance;
-    }
-
-    /**
      * 执行系统命令，返回执行是否成功
      * 
      * @author 阿信sxq-2015年8月30日

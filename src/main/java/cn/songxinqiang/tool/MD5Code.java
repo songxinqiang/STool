@@ -41,7 +41,7 @@ package cn.songxinqiang.tool;
  * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
  * </p>
  *
- * @author 阿信sxq-2016年1月5日
+ * @author 阿信sxq-2016年1月6日
  *
  */
 public class MD5Code {
@@ -73,33 +73,31 @@ public class MD5Code {
     // input buffer
     private byte[] buffer = new byte[64];
 
-    private String digestHexStr;
 
     private byte[] digest = new byte[16];
 
     /**
      * 根据给出的字符串，生成MD5加密字符串，
      * 
-     * @author 阿信sxq-2016年1月5日
+     * @author 阿信sxq-2016年1月6日
      * 
-     * @param inbuf
+     * @param inStr
      *            需要加密的字符串
      * @return 加密后的字符串，总是32位长度
      */
-    public String getCode(String inbuf) {
+    public String getCode(String inStr) {
         keyBeanInit();
-        keyBeanUpdate(inbuf.getBytes(), inbuf.length());
+        keyBeanUpdate(inStr.getBytes(), inStr.length());
         keyBeanFinal();
-        digestHexStr = "";
-        for (int i = 0; i < 16; i++) {
-            digestHexStr += byteHEX(digest[i]);
+        StringBuilder sb = new StringBuilder();
+        for (byte b:digest) {
+            sb.append(byteHEX(b));
         }
-        return digestHexStr;
+        return sb.toString();
     }
 
     public MD5Code() {
         keyBeanInit();
-        return;
     }
 
     private void keyBeanInit() {
@@ -109,7 +107,6 @@ public class MD5Code {
         state[1] = 0xefcdab89L;
         state[2] = 0x98badcfeL;
         state[3] = 0x10325476L;
-        return;
     }
 
     private long F(long x, long y, long z) {
@@ -160,8 +157,9 @@ public class MD5Code {
         int i, index, partLen;
         byte[] block = new byte[64];
         index = (int) (count[0] >>> 3) & 0x3F;
-        if ((count[0] += (inputLen << 3)) < (inputLen << 3))
+        if ((count[0] += (inputLen << 3)) < (inputLen << 3)) {
             count[1]++;
+        }
         count[1] += (inputLen >>> 29);
         partLen = 64 - index;
         if (inputLen >= partLen) {
@@ -172,32 +170,34 @@ public class MD5Code {
                 keyBeanTransform(block);
             }
             index = 0;
-        } else
+        } else {
             i = 0;
+        }
         keyBeanMemcpy(buffer, inbuf, index, i, inputLen - i);
     }
 
     private void keyBeanFinal() {
         byte[] bits = new byte[8];
         int index, padLen;
-        Encode(bits, count, 8);
+        encode(bits, count, 8);
         index = (int) (count[0] >>> 3) & 0x3f;
         padLen = (index < 56) ? (56 - index) : (120 - index);
         keyBeanUpdate(PADDING, padLen);
         keyBeanUpdate(bits, 8);
-        Encode(digest, state, 16);
+        encode(digest, state, 16);
     }
 
     private void keyBeanMemcpy(byte[] output, byte[] input, int outpos, int inpos, int len) {
         int i;
-        for (i = 0; i < len; i++)
+        for (i = 0; i < len; i++) {
             output[outpos + i] = input[inpos + i];
+        }
     }
 
     private void keyBeanTransform(byte block[]) {
         long a = state[0], b = state[1], c = state[2], d = state[3];
         long[] x = new long[16];
-        Decode(x, block, 64);
+        decode(x, block, 64);
 
         /* Round 1 */
         a = FF(a, b, c, d, x[0], S11, 0xd76aa478L); /* 1 */
@@ -277,7 +277,7 @@ public class MD5Code {
         state[3] += d;
     }
 
-    private void Encode(byte[] output, long[] input, int len) {
+    private void encode(byte[] output, long[] input, int len) {
         int i, j;
         for (i = 0, j = 0; j < len; i++, j += 4) {
             output[j] = (byte) (input[i] & 0xffL);
@@ -287,20 +287,20 @@ public class MD5Code {
         }
     }
 
-    private void Decode(long[] output, byte[] input, int len) {
+    private void decode(long[] output, byte[] input, int len) {
         int i, j;
 
-        for (i = 0, j = 0; j < len; i++, j += 4)
+        for (i = 0, j = 0; j < len; i++, j += 4) {
             output[i] = b2iu(input[j]) | (b2iu(input[j + 1]) << 8) | (b2iu(input[j + 2]) << 16)
                     | (b2iu(input[j + 3]) << 24);
-        return;
+        }
     }
 
-    private static long b2iu(byte b) {
+    private long b2iu(byte b) {
         return b < 0 ? b & 0x7F + 128 : b;
     }
 
-    private static String byteHEX(byte ib) {
+    private String byteHEX(byte ib) {
         char[] Digit = "0123456789abcdef".toCharArray();
         char[] ob = new char[2];
         ob[0] = Digit[(ib >>> 4) & 0X0F];
