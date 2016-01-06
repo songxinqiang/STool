@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -8,10 +7,10 @@
         <version>1.5</version>
     </parent>
     <artifactId>stool</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
 
     <name>Songxinqiang-Tool</name>
-    <description>This is a tool lib for Java to develop applications</description>
+    <description>Java项目开发的一些工具类</description>
     <url>https://git.oschina.net/songxinqiang/STool</url>
 
     <licenses>
@@ -37,16 +36,9 @@
     </scm>
 
     <properties>
-        <version.tomcat>8.0.28</version.tomcat>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-dbcp</artifactId>
-            <version>${version.tomcat}</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 </project>

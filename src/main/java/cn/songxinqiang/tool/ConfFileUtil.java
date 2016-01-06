@@ -36,7 +36,6 @@ import java.util.Map.Entry;
  * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
  * </p>
  * 
- * @author 阿信sxq-2015年8月30日
  * @author 阿信sxq-2015年10月30日
  *
  */

@@ -1,28 +1,50 @@
-/*
- * Copyright 2014 阿信(songxinqiang@vip.qq.com)
+/**
+ * <pre>
+ * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * </pre>
  */
-
+/*
+ * 创建时间：2016年1月5日--下午6:02:42
+ * 作者：阿信sxq(songxinqiang@vip.qq.com)
+ */
 package cn.songxinqiang.tool;
 
 /**
- * 生成md5密码工具类 源代码源于网络，根据提供的字符串生成对应的md5加密字符串，生成的字符串32位
+ * 生成md5密码工具类
  * 
- * @author 宋信强--2014年9月10日--songxinqiang@vip.qq.com
+ * 源代码来自于<a href="http://www.rfc-editor.org/rfc/rfc1321.txt">RFC1321</a>中的示例代码<br>
+ * 测试用例：
+ * 
+ * <pre>
+ * MD5 ("") =d41d8cd98f00b204e9800998ecf8427e
+ * MD5 ("a") =0cc175b9c0f1b6a831c399e269772661
+ * MD5 ("abc") = 900150983cd24fb0d6963f7d28e17f72
+ * MD5 ("message digest") =f96b697d7cb7938d525a2f31aaf161d0
+ * MD5 ("abcdefghijklmnopqrstuvwxyz") =c3fcd3d76192e4007dfb496cca67e13b
+ * MD5 ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") =d174ab98d277d9f5a5611c2c9f419d9f
+ * MD5 ("12345678901234567890123456789012345678901234567890123456789012345678901234567890") = 57edf4a22be3c955ac49da2e2107b67a
+ * </pre>
+ *
+ * <p>
+ * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
+ * </p>
+ *
+ * @author 阿信sxq-2016年1月6日
  *
  */
-public final class MD5Code {
+public class MD5Code {
 
     private static final int S11 = 7;
     private static final int S12 = 12;
@@ -40,9 +62,9 @@ public final class MD5Code {
     private static final int S42 = 10;
     private static final int S43 = 15;
     private static final int S44 = 21;
-    private static final byte[] PADDING = { -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    private static final byte[] PADDING = { -128, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     // state (ABCD)
     private long[] state = new long[4];
@@ -51,31 +73,31 @@ public final class MD5Code {
     // input buffer
     private byte[] buffer = new byte[64];
 
-    private String digestHexStr;
 
     private byte[] digest = new byte[16];
 
     /**
      * 根据给出的字符串，生成MD5加密字符串，
      * 
-     * @param inbuf
+     * @author 阿信sxq-2016年1月6日
+     * 
+     * @param inStr
      *            需要加密的字符串
      * @return 加密后的字符串，总是32位长度
      */
-    public String getCode(String inbuf) {
+    public String getCode(String inStr) {
         keyBeanInit();
-        keyBeanUpdate(inbuf.getBytes(), inbuf.length());
+        keyBeanUpdate(inStr.getBytes(), inStr.length());
         keyBeanFinal();
-        digestHexStr = "";
-        for (int i = 0; i < 16; i++) {
-            digestHexStr += byteHEX(digest[i]);
+        StringBuilder sb = new StringBuilder();
+        for (byte b:digest) {
+            sb.append(byteHEX(b));
         }
-        return digestHexStr;
+        return sb.toString();
     }
 
     public MD5Code() {
         keyBeanInit();
-        return;
     }
 
     private void keyBeanInit() {
@@ -85,7 +107,6 @@ public final class MD5Code {
         state[1] = 0xefcdab89L;
         state[2] = 0x98badcfeL;
         state[3] = 0x10325476L;
-        return;
     }
 
     private long F(long x, long y, long z) {
@@ -136,8 +157,9 @@ public final class MD5Code {
         int i, index, partLen;
         byte[] block = new byte[64];
         index = (int) (count[0] >>> 3) & 0x3F;
-        if ((count[0] += (inputLen << 3)) < (inputLen << 3))
+        if ((count[0] += (inputLen << 3)) < (inputLen << 3)) {
             count[1]++;
+        }
         count[1] += (inputLen >>> 29);
         partLen = 64 - index;
         if (inputLen >= partLen) {
@@ -148,32 +170,34 @@ public final class MD5Code {
                 keyBeanTransform(block);
             }
             index = 0;
-        } else
+        } else {
             i = 0;
+        }
         keyBeanMemcpy(buffer, inbuf, index, i, inputLen - i);
     }
 
     private void keyBeanFinal() {
         byte[] bits = new byte[8];
         int index, padLen;
-        Encode(bits, count, 8);
+        encode(bits, count, 8);
         index = (int) (count[0] >>> 3) & 0x3f;
         padLen = (index < 56) ? (56 - index) : (120 - index);
         keyBeanUpdate(PADDING, padLen);
         keyBeanUpdate(bits, 8);
-        Encode(digest, state, 16);
+        encode(digest, state, 16);
     }
 
     private void keyBeanMemcpy(byte[] output, byte[] input, int outpos, int inpos, int len) {
         int i;
-        for (i = 0; i < len; i++)
+        for (i = 0; i < len; i++) {
             output[outpos + i] = input[inpos + i];
+        }
     }
 
     private void keyBeanTransform(byte block[]) {
         long a = state[0], b = state[1], c = state[2], d = state[3];
         long[] x = new long[16];
-        Decode(x, block, 64);
+        decode(x, block, 64);
 
         /* Round 1 */
         a = FF(a, b, c, d, x[0], S11, 0xd76aa478L); /* 1 */
@@ -253,7 +277,7 @@ public final class MD5Code {
         state[3] += d;
     }
 
-    private void Encode(byte[] output, long[] input, int len) {
+    private void encode(byte[] output, long[] input, int len) {
         int i, j;
         for (i = 0, j = 0; j < len; i++, j += 4) {
             output[j] = (byte) (input[i] & 0xffL);
@@ -263,26 +287,26 @@ public final class MD5Code {
         }
     }
 
-    private void Decode(long[] output, byte[] input, int len) {
+    private void decode(long[] output, byte[] input, int len) {
         int i, j;
 
-        for (i = 0, j = 0; j < len; i++, j += 4)
+        for (i = 0, j = 0; j < len; i++, j += 4) {
             output[i] = b2iu(input[j]) | (b2iu(input[j + 1]) << 8) | (b2iu(input[j + 2]) << 16)
                     | (b2iu(input[j + 3]) << 24);
-        return;
+        }
     }
 
-    private static long b2iu(byte b) {
+    private long b2iu(byte b) {
         return b < 0 ? b & 0x7F + 128 : b;
     }
 
-    private static String byteHEX(byte ib) {
-        char[] Digit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
-                'F' };
+    private String byteHEX(byte ib) {
+        char[] Digit = "0123456789abcdef".toCharArray();
         char[] ob = new char[2];
         ob[0] = Digit[(ib >>> 4) & 0X0F];
         ob[1] = Digit[ib & 0X0F];
         String s = new String(ob);
         return s;
     }
+
 }
