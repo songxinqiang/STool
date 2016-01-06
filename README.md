@@ -1,3 +1,3 @@
-#stool
+#STool
 
-个人整理的一些用于Java开发(主要是web、spring相关)的工具类
+整理的一些用于Java开发的工具类，使用Java 8进行编译，相关类已经做了调整，可以很方便用于Spring项目使用。
