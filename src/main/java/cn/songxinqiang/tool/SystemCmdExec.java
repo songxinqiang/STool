@@ -85,7 +85,7 @@ public final class SystemCmdExec {
         try {
             Process p = run.exec(cmd);
             in = new BufferedInputStream(p.getInputStream());
-            inBr = new BufferedReader(new InputStreamReader(in, "gb2312"));
+            inBr = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String lineStr = null;
             while ((lineStr = inBr.readLine()) != null) {
                 strList.add(lineStr);
