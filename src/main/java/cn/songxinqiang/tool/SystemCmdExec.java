@@ -1,13 +1,13 @@
 /**
  * <pre>
- * Copyright 2014,2015 阿信sxq(songxinqiang@vip.qq.com).
- *
+ * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -70,9 +70,11 @@ public final class SystemCmdExec {
 
     /**
      * 执行系统命令返回结果字符串，结果按照一行一个字符串的形式封装为一个列表<br>
-     * 该方法会产生阻塞，等待执行结束后才会返回
+     * 该方法会产生阻塞，等待执行结束后才会返回.<br>
+     * 读取命令的输出结果时使用编码格式为{@code UTF-8},这个编码在Linux上不会出现乱码，但是在Windows上就会有乱码的可能
      * 
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq--2016年1月19日
+     * 
      * @param cmd
      *            命令
      * @return 命令所产生的所有输出，等到输出完成后才会返回
