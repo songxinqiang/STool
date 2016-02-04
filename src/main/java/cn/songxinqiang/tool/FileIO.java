@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2015 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,13 @@
  */
 package cn.songxinqiang.tool;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,49 +52,39 @@ public final class FileIO {
     }
 
     /**
-     * 按照行读取文件，得到的文件内容列表保留文件中的顺序
+     * 使用{@code UTF-8}的编码读取文集爱你中的所有行，读取出错返回{@code null}
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            需要读取的文件
      * @return 文件内容的列表
+     * 
+     * @see Files#readAllLines(java.nio.file.Path)
      */
-    public static final LinkedList<String> readLine(File file) {
-        LinkedList<String> list = new LinkedList<String>();
-        BufferedReader reader = null;
+    public static final List<String> readLine(File file) {
+        List<String> list = null;
         try {
-            reader = new BufferedReader(new FileReader(file));
-            String rstr = null;
-            while ((rstr = reader.readLine()) != null) {
-                list.add(rstr);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            list = Files.readAllLines(file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {}
         }
         return list;
     }
 
     /**
-     * 读取文件内容，传入的字符串参数是文件的完整路径描述，将用于创建{@code File}的对象，调用本方法和调用<br>
-     * {@code FileIO.readLine(new File(file));}<br>
-     * 是一样的的
+     * 读取文件内容，传入的字符串参数是文件的完整路径描述，将用于创建{@code File}的对象，调用本方法和调用
+     * {@code #readLine(new File(file));}是一样的的
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            文件的路径描述
      * @return 文件的内容
+     * 
+     * @see #readLine(File)
      */
-    public static final LinkedList<String> readLine(String file) {
+    public static final List<String> readLine(String file) {
         return readLine(new File(file));
     }
 
@@ -165,7 +154,7 @@ public final class FileIO {
      * <b>注意：</b>{@code regex}应该是一个正则表达式，这将直接应用于对
      * {@linkplain String#split(String)}的调用
      *
-     * @author 阿信sxq-2015年8月30日
+     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            要读取的文本文件
@@ -175,16 +164,12 @@ public final class FileIO {
      * @see String#split(String) 拆分字符串
      * @see #readLine(File) 读取文件内容
      */
-    public static final LinkedHashMap<Integer, LinkedList<String>> parseFile(File file, String regex) {
-        LinkedHashMap<Integer, LinkedList<String>> map = new LinkedHashMap<Integer, LinkedList<String>>();
-        LinkedList<String> fileStr = FileIO.readLine(file);
-        for (int i = 0; i < fileStr.size(); i++) {
-            LinkedList<String> list = new LinkedList<String>();
-            String[] strs = fileStr.get(i).split(regex);
-            for (String str : strs) {
-                list.add(str);
-            }
-            map.put(i, list);
+    public static final LinkedHashMap<Integer, List<String>> parseFile(File file, String regex) {
+        LinkedHashMap<Integer, List<String>> map = new LinkedHashMap<>();
+        Iterator<String> iterator = FileIO.readLine(file).iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            String[] strs = iterator.next().split(regex);
+            map.put(i, Arrays.asList(strs));
         }
 
         return map;
