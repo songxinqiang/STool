@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2015 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,17 +63,23 @@ public final class ConfFileUtil {
      * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔，分隔符前面的部分作为键后面的部分作为值，
      * 数据均采用 {@link LinkedHashMap}存储，会保留配置在文件中的记录顺序
      *
-     * @author 阿信sxq-2015年10月30日
+     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            文件的完整限定名
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
+    /**
+     *
+     *
+     * @param file
+     * @return
+     */
     public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
 
-        LinkedList<String> content = FileIO.readLine(file);
+        List<String> content = FileIO.readLine(file);
         for (String line : content) {
             if (line.length() <= 1 || line.startsWith(COMMENT_LINE_START)) {
                 continue;
@@ -100,7 +106,7 @@ public final class ConfFileUtil {
      * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔,分隔符前面的部分作为键后面的部分作为值，
      * 如果配置没有对应的值，那么会在结果的键值对记录中存储{@code null}值
      *
-     * @author 阿信sxq-2015年10月30日
+     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            需要读取的配置文件的完整路径
@@ -109,7 +115,7 @@ public final class ConfFileUtil {
     public static final Map<String, String> readFileRecordWithoutNode(String file) {
         Map<String, String> valueMap = new LinkedHashMap<String, String>();
 
-        LinkedList<String> content = FileIO.readLine(file);
+        List<String> content = FileIO.readLine(file);
         for (String line : content) {
             if (line.length() <= 1 || line.startsWith(COMMENT_LINE_START)) {
                 continue;
