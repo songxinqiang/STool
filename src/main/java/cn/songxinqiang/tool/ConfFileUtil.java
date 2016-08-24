@@ -69,12 +69,6 @@ public final class ConfFileUtil {
      *            文件的完整限定名
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
-    /**
-     *
-     *
-     * @param file
-     * @return
-     */
     public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
