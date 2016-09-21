@@ -27,8 +27,10 @@ package cn.songxinqiang.tool.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.songxinqiang.tool.SharePager;
+
 /**
- * 记录分页的工具类，保存分页情况的相关数据和当前页的记录数据
+ * 记录分页数据和属性的工具类，保存分页情况的相关数据和当前页的记录数据
  *
  * @author 阿信sxq--2016年9月21日
  *
@@ -39,7 +41,7 @@ public class Page<T> implements Serializable {
      * 
      * @author 阿信sxq--2016年9月21日
      */
-    private static final long serialVersionUID = -8160825312250756542L;
+    private static final long serialVersionUID = -3865089825272428515L;
 
     /**
      * 数据
@@ -94,6 +96,21 @@ public class Page<T> implements Serializable {
         this.pageSize = pageSize;
         this.totalPage = totalPage;
         this.totalRow = totalRow;
+    }
+
+    /**
+     * 构造器，通过分页工具类来提供分页属性的相关参数
+     *
+     * @author 阿信sxq--2016年9月21日
+     *
+     * @param list
+     *            分页数据
+     * @param pager
+     *            分页工具类实例，提供分页属性参数
+     */
+    public Page(List<T> list, SharePager pager) {
+        this(list, pager.getCurrentPage(), pager.getPageSize(), pager.getTotalPage(),
+                pager.getTotalRow());
     }
 
     /**
