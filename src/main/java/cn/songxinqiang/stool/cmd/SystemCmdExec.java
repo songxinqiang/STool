@@ -19,7 +19,7 @@
  * 创建时间：2015年8月30日--下午10:23:14
  * 作者：阿信sxq 使用Windows平台下的Eclipse(STS)创建<br>
  */
-package cn.songxinqiang.tool;
+package cn.songxinqiang.stool.cmd;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

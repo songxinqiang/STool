@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright (c) 2014, 2017 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,13 @@
  * </pre>
  */
 /*
- * 创建时间：2015年8月30日--下午10:27:39
- * 作者：阿信sxq 使用Windows平台下的Eclipse(STS)创建<br>
+ * 创建时间：2017年2月22日--下午4:00:44
+ * 作者：宋信强(阿信sxq, songxinqiang@vip.qq.com, https://my.oschina.net/songxinqiang)
+ * <p>
+ * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
+ * </p>
  */
-package cn.songxinqiang.tool;
+package cn.songxinqiang.stool.conf;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -27,19 +30,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import cn.songxinqiang.stool.io.FileIO;
+
 /**
  * 配置文件操作工具类，实现对配置文件读取、写入<br>
  * 要注意的是，由于忽略了注释和空行，所以即使简单的直接读入再写回，那么也会使得文件内容变化（丢失注释和空行）<br>
  * 对于有节点的文件读取，节点使用{@code [}判断，所以任何以{@code [}开头的行都会整体作为一个键节点
  *
- * <p>
- * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
- * </p>
- * 
- * @author 阿信sxq-2015年10月30日
+ * @author 阿信sxq
  *
  */
-public final class ConfFileUtil {
+public class ConfFileUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(ConfFileUtil.class);
 
     /**
      * 注释行的开始，这一行的内容将被丢弃
@@ -63,13 +69,12 @@ public final class ConfFileUtil {
      * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔，分隔符前面的部分作为键后面的部分作为值，
      * 数据均采用 {@link LinkedHashMap}存储，会保留配置在文件中的记录顺序
      *
-     * @author 阿信sxq--2016年2月4日
-     *
      * @param file
      *            文件的完整限定名
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
     public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
+        log.info("read file: %s", file);
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
 
@@ -91,6 +96,8 @@ public final class ConfFileUtil {
             }
         }
 
+        log.debug("file: %s, content: %s", file, returnMap.toString());
+
         return returnMap;
     }
 
@@ -100,13 +107,12 @@ public final class ConfFileUtil {
      * 分隔符({@linkplain #SEPARATOR_EQUAL})进行分隔,分隔符前面的部分作为键后面的部分作为值，
      * 如果配置没有对应的值，那么会在结果的键值对记录中存储{@code null}值
      *
-     * @author 阿信sxq--2016年2月4日
-     *
      * @param file
      *            需要读取的配置文件的完整路径
      * @return 配置文件中记录的配置信息的键值对
      */
     public static final Map<String, String> readFileRecordWithoutNode(String file) {
+        log.info("read file: %s", file);
         Map<String, String> valueMap = new LinkedHashMap<String, String>();
 
         List<String> content = FileIO.readLine(file);
@@ -122,6 +128,8 @@ public final class ConfFileUtil {
             }
         }
 
+        log.debug("file: %s, content: %s", file, valueMap);
+
         return valueMap;
     }
 
@@ -129,8 +137,6 @@ public final class ConfFileUtil {
      * 将配置信息写入到文件中，覆盖原文件信息，指定的文件若不存在会新建文件,会对节点不加处理，值会紧随键之后，
      * 在键和值中间加入分隔符，分隔符使用({@linkplain #SEPARATOR_EQUAL},
      * 在最后加入换行符(由{@code System.getProperty("line.separator");}确定)
-     *
-     * @author 阿信sxq-2015年10月30日
      *
      * @param file
      *            文件的完整限定名，若文件不存在会新建文件
@@ -141,6 +147,7 @@ public final class ConfFileUtil {
      */
     public static final void writeFileRecordWithNode(String file,
             Map<String, Map<String, String>> map) {
+        log.info("write file: %s, node: %s", file, map.toString());
         List<String> contentList = new LinkedList<>();
         for (Entry<String, Map<String, String>> entry : map.entrySet()) {
             contentList.add(entry.getKey());
@@ -160,8 +167,6 @@ public final class ConfFileUtil {
      * 在最后加入换行符(由{@code System.getProperty("line.separator");}确定)<br>
      * 本方法输出的文件不包含节点
      *
-     * @author 阿信sxq-2015年10月30日
-     *
      * @param file
      *            输出到的目标文件，不存在的化会新建
      * @param map
@@ -170,6 +175,7 @@ public final class ConfFileUtil {
      * @see FileIO#writeFile(String, List) 输出到文件
      */
     public static final void writeFileRecordWithoutNode(String file, Map<String, String> map) {
+        log.info("write file: %s, node: %s", file, map.toString());
         List<String> contentList = new LinkedList<>();
         for (Entry<String, String> entry : map.entrySet()) {
             contentList.add(entry.getKey() + SEPARATOR_EQUAL + entry.getValue());

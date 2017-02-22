@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright (c) 2014, 2017 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,13 @@
  * </pre>
  */
 /*
- * 创建时间：2015年8月30日--下午10:25:25
- * 作者：阿信sxq 使用Windows平台下的Eclipse(STS)创建<br>
+ * 创建时间：2017年2月22日--下午4:03:19
+ * 作者：宋信强(阿信sxq, songxinqiang@vip.qq.com, https://my.oschina.net/songxinqiang)
+ * <p>
+ * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
+ * </p>
  */
-package cn.songxinqiang.tool;
+package cn.songxinqiang.stool.io;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,17 +33,18 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 与文件读写操作有关的工具类
  *
- * <p>
- * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
- * </p>
- * 
- * @author 阿信sxq-2015年8月30日
+ * @author 阿信sxq
  *
  */
-public final class FileIO {
+public class FileIO {
+
+    private static final Logger log = LoggerFactory.getLogger(FileIO.class);
 
     /**
      * 行分隔符，针对不同的操作系统在类加载时进行读取系统属性值确定
@@ -54,8 +58,6 @@ public final class FileIO {
     /**
      * 使用{@code UTF-8}的编码读取文集爱你中的所有行，读取出错返回{@code null}
      *
-     * @author 阿信sxq--2016年2月4日
-     *
      * @param file
      *            需要读取的文件
      * @return 文件内容的列表
@@ -67,7 +69,7 @@ public final class FileIO {
         try {
             list = Files.readAllLines(file.toPath());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return list;
     }
@@ -75,8 +77,6 @@ public final class FileIO {
     /**
      * 读取文件内容，传入的字符串参数是文件的完整路径描述，将用于创建{@code File}的对象，调用本方法和调用
      * {@code #readLine(new File(file));}是一样的的
-     *
-     * @author 阿信sxq--2016年2月4日
      *
      * @param file
      *            文件的路径描述
@@ -94,8 +94,6 @@ public final class FileIO {
      * 文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符,使用
      * {@code System.getProperty("line.separator");}获取。
      *
-     * @author 宋信强-2015年10月29日
-     *
      * @param file
      *            要写入到的文件的路径描述
      * @param content
@@ -103,6 +101,8 @@ public final class FileIO {
      * @see FileWriter#write(String)
      */
     public static final void writeFile(String file, List<String> content) {
+        log.info("write file:%s, content:%s", file,
+                Arrays.toString(content.toArray(new String[content.size()])));
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
@@ -110,20 +110,20 @@ public final class FileIO {
                 writer.write(line + LINE_SEPARATOR);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             try {
                 if (writer != null) {
                     writer.close();
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
         }
     }
 
     /**
      * 向文件中写入文本内容，会冲掉原本文件中的所有内容，如果文件不存在则会创建该文件
-     *
-     * @author 宋信强-2015年10月28日
      *
      * @param file
      *            写入的目标文件
@@ -132,18 +132,21 @@ public final class FileIO {
      * @see FileWriter#write(String)
      */
     public static final void writeFile(String file, String content) {
+        log.info("write file:%s, content:%s", file, content);
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
             writer.write(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         } finally {
             try {
                 if (writer != null) {
                     writer.close();
                 }
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
         }
     }
 
@@ -154,8 +157,6 @@ public final class FileIO {
      * <b>注意：</b>{@code regex}应该是一个正则表达式，这将直接应用于对
      * {@linkplain String#split(String)}的调用
      *
-     * @author 阿信sxq--2016年2月4日
-     *
      * @param file
      *            要读取的文本文件
      * @param regex
@@ -165,6 +166,7 @@ public final class FileIO {
      * @see #readLine(File) 读取文件内容
      */
     public static final LinkedHashMap<Integer, List<String>> parseFile(File file, String regex) {
+        log.info("read file:%s, with:%s", file.getAbsolutePath(), regex);
         LinkedHashMap<Integer, List<String>> map = new LinkedHashMap<>();
         Iterator<String> iterator = FileIO.readLine(file).iterator();
         for (int i = 0; iterator.hasNext(); i++) {
