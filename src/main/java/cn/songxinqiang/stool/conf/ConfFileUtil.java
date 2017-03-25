@@ -56,6 +56,8 @@ public class ConfFileUtil {
      * 从这一行的下一行开始到下一次出现该字符行的上一行，这之间出现的配置都被认为是属于这个配置节点的配置项
      */
     private static final String NODE_START = "[";
+    private static final String NODE_END = "]";
+    private static final String NODE_FORMAT = "[%s]";
     /**
      * 分隔符, 等号({@code "="})
      */
@@ -74,7 +76,7 @@ public class ConfFileUtil {
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
     public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
-        log.info("read file: %s", file);
+        log.info("read file: " + file);
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
 
@@ -85,6 +87,7 @@ public class ConfFileUtil {
             }
             if (line.startsWith(NODE_START)) {
                 valueMap = new LinkedHashMap<String, String>();
+                line = line.replace(NODE_START, "").replace(NODE_END, "");
                 returnMap.put(line, valueMap);
                 continue;
             }
@@ -96,7 +99,7 @@ public class ConfFileUtil {
             }
         }
 
-        log.debug("file: %s, content: %s", file, returnMap.toString());
+        log.debug("file: " + file + ", content: " + returnMap.toString());
 
         return returnMap;
     }
@@ -112,7 +115,7 @@ public class ConfFileUtil {
      * @return 配置文件中记录的配置信息的键值对
      */
     public static final Map<String, String> readFileRecordWithoutNode(String file) {
-        log.info("read file: %s", file);
+        log.info("read file: " + file);
         Map<String, String> valueMap = new LinkedHashMap<String, String>();
 
         List<String> content = FileIO.readLine(file);
@@ -128,7 +131,7 @@ public class ConfFileUtil {
             }
         }
 
-        log.debug("file: %s, content: %s", file, valueMap);
+        log.debug("file: " + file + ", content: " + valueMap);
 
         return valueMap;
     }
@@ -147,10 +150,11 @@ public class ConfFileUtil {
      */
     public static final void writeFileRecordWithNode(String file,
             Map<String, Map<String, String>> map) {
-        log.info("write file: %s, node: %s", file, map.toString());
+        log.info("write file: " + file + ", node: " + map.toString());
         List<String> contentList = new LinkedList<>();
         for (Entry<String, Map<String, String>> entry : map.entrySet()) {
-            contentList.add(entry.getKey());
+            String node = String.format(NODE_FORMAT, entry.getKey());
+            contentList.add(node);
 
             Map<String, String> valueMap = entry.getValue();
 
@@ -175,7 +179,7 @@ public class ConfFileUtil {
      * @see FileIO#writeFile(String, List) 输出到文件
      */
     public static final void writeFileRecordWithoutNode(String file, Map<String, String> map) {
-        log.info("write file: %s, node: %s", file, map.toString());
+        log.info("write file: " + file + ", node: " + map.toString());
         List<String> contentList = new LinkedList<>();
         for (Entry<String, String> entry : map.entrySet()) {
             contentList.add(entry.getKey() + SEPARATOR_EQUAL + entry.getValue());
