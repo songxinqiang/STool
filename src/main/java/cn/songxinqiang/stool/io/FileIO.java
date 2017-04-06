@@ -56,7 +56,7 @@ public class FileIO {
     }
 
     /**
-     * 使用{@code UTF-8}的编码读取文集爱你中的所有行，读取出错返回{@code null}
+     * 使用{@code UTF-8}的编码读取文件中的所有行，读取出错返回{@code null}
      *
      * @param file
      *            需要读取的文件
