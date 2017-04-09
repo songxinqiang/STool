@@ -19,7 +19,7 @@
  * 创建时间：2016年1月5日--下午6:02:42
  * 作者：阿信sxq(songxinqiang@vip.qq.com)
  */
-package cn.songxinqiang.tool;
+package cn.songxinqiang.stool.code;
 
 /**
  * 生成md5密码工具类
@@ -73,7 +73,6 @@ public class MD5Code {
     // input buffer
     private byte[] buffer = new byte[64];
 
-
     private byte[] digest = new byte[16];
 
     /**
@@ -90,7 +89,7 @@ public class MD5Code {
         keyBeanUpdate(inStr.getBytes(), inStr.length());
         keyBeanFinal();
         StringBuilder sb = new StringBuilder();
-        for (byte b:digest) {
+        for (byte b : digest) {
             sb.append(byteHEX(b));
         }
         return sb.toString();
