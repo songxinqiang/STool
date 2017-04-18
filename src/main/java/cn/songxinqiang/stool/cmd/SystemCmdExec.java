@@ -26,7 +26,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 系统命令执行工具类，提供对系统命令的执行操作<br>
@@ -40,6 +44,8 @@ import java.util.List;
  *
  */
 public final class SystemCmdExec {
+
+    private static final Logger log = LoggerFactory.getLogger(SystemCmdExec.class);
 
     private static final Runtime run;
 
@@ -56,13 +62,15 @@ public final class SystemCmdExec {
      * @return 仅当操作成功返回true
      */
     public final boolean runCmd(String cmd) {
+        log.debug("run system cmd:[" + cmd + "]");
+
         boolean flag = false;
 
         try {
             run.exec(cmd);
             flag = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("run system cmd error," + e.getMessage());
             flag = false;
         }
         return flag;
@@ -80,6 +88,8 @@ public final class SystemCmdExec {
      * @return 命令所产生的所有输出，等到输出完成后才会返回
      */
     public final List<String> runCmdForString(String cmd) {
+        log.debug("run system cmd for String:[" + cmd + "]");
+
         List<String> strList = new ArrayList<String>();
 
         BufferedInputStream in = null;
@@ -95,7 +105,7 @@ public final class SystemCmdExec {
             p = null;
             lineStr = null;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("run system cmd for String error," + e.getMessage());
         } finally {
             if (inBr != null) {
                 try {
@@ -110,6 +120,8 @@ public final class SystemCmdExec {
             inBr = null;
             in = null;
         }
+
+        log.debug("run system cmd for String list,result:" + Arrays.toString(strList.toArray()));
 
         return strList;
     }
