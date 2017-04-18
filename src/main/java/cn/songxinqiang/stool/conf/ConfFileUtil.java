@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +65,16 @@ public class ConfFileUtil {
     public static final String SEPARATOR_EQUAL = "=";
 
     /**
+     * 配置项行的结构样式
+     */
+    private static final String LINE_FORMAT = "%s = %s";
+
+    /**
+     * 拆分行的匹配模式
+     */
+    private static final Pattern LINE_SEPARATOR = Pattern.compile(SEPARATOR_EQUAL);
+
+    /**
      * 读取配置文件的信息，以键值对的形式返回读取到的信息<br>
      * 会忽略空行和以{@linkplain #COMMENT_LINE_START}指定内容开头的注释行， 对于由
      * {@linkplain #NODE_START}表示的字符串开头的行，将整行去掉首尾空格后作为键，
@@ -91,7 +102,7 @@ public class ConfFileUtil {
                 returnMap.put(line, valueMap);
                 continue;
             }
-            String[] strs = line.split(SEPARATOR_EQUAL);
+            String[] strs = LINE_SEPARATOR.split(line, -1);
             if (strs.length <= 1) {
                 valueMap.put(strs[0].trim(), null);
             } else {
@@ -123,7 +134,7 @@ public class ConfFileUtil {
             if (line.length() <= 1 || line.startsWith(COMMENT_LINE_START)) {
                 continue;
             }
-            String[] strs = line.split(SEPARATOR_EQUAL);
+            String[] strs = LINE_SEPARATOR.split(line, -1);
             if (strs.length <= 1) {
                 valueMap.put(strs[0].trim(), null);
             } else {
@@ -159,7 +170,7 @@ public class ConfFileUtil {
             Map<String, String> valueMap = entry.getValue();
 
             for (Entry<String, String> ent : valueMap.entrySet()) {
-                contentList.add(ent.getKey() + SEPARATOR_EQUAL + ent.getValue());
+                contentList.add(String.format(LINE_FORMAT, ent.getKey(), ent.getValue()));
             }
         }
         FileIO.writeFile(file, contentList);
@@ -182,7 +193,7 @@ public class ConfFileUtil {
         log.info("write file: " + file + ", node: " + map.toString());
         List<String> contentList = new LinkedList<>();
         for (Entry<String, String> entry : map.entrySet()) {
-            contentList.add(entry.getKey() + SEPARATOR_EQUAL + entry.getValue());
+            contentList.add(String.format(LINE_FORMAT, entry.getKey(), entry.getValue()));
         }
         FileIO.writeFile(file, contentList);
     }
