@@ -67,7 +67,7 @@ public class ConfFileUtil {
     /**
      * 配置项行的结构样式
      */
-    private static final String LINE_FORMAT = "%s = %s";
+    private static final String LINE_FORMAT = "%s=%s";
 
     /**
      * 拆分行的匹配模式
