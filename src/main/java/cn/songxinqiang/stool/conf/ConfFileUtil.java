@@ -102,9 +102,9 @@ public class ConfFileUtil {
                 returnMap.put(line, valueMap);
                 continue;
             }
-            String[] strs = LINE_SEPARATOR.split(line, -1);
-            if (strs.length <= 1) {
-                valueMap.put(strs[0].trim(), null);
+            String[] strs = LINE_SEPARATOR.split(line, 2);
+            if (strs.length < 2) {
+                valueMap.put(strs[0].trim(), "");
             } else {
                 valueMap.put(strs[0].trim(), strs[1].trim());
             }
@@ -134,9 +134,9 @@ public class ConfFileUtil {
             if (line.length() <= 1 || line.startsWith(COMMENT_LINE_START)) {
                 continue;
             }
-            String[] strs = LINE_SEPARATOR.split(line, -1);
-            if (strs.length <= 1) {
-                valueMap.put(strs[0].trim(), null);
+            String[] strs = LINE_SEPARATOR.split(line, 2);
+            if (strs.length < 2) {
+                valueMap.put(strs[0].trim(), "");
             } else {
                 valueMap.put(strs[0].trim(), strs[1].trim());
             }
