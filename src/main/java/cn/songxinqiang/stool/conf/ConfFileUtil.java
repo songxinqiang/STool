@@ -24,6 +24,7 @@
  */
 package cn.songxinqiang.stool.conf;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -75,6 +76,19 @@ public class ConfFileUtil {
     private static final Pattern LINE_SEPARATOR = Pattern.compile(SEPARATOR_EQUAL);
 
     /**
+     * 读取配置文件的信息，等价于{@code readFileRecordWithNode(new File(file))}
+     *
+     * @param file
+     *            文件的完整限定名
+     * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
+     * 
+     * @see #readFileRecordWithNode(File)
+     */
+    public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
+        return readFileRecordWithNode(new File(file));
+    }
+
+    /**
      * 读取配置文件的信息，以键值对的形式返回读取到的信息<br>
      * 会忽略空行和以{@linkplain #COMMENT_LINE_START}指定内容开头的注释行， 对于由
      * {@linkplain #NODE_START}表示的字符串开头的行，将整行去掉首尾空格后作为键，
@@ -83,11 +97,11 @@ public class ConfFileUtil {
      * 数据均采用 {@link LinkedHashMap}存储，会保留配置在文件中的记录顺序
      *
      * @param file
-     *            文件的完整限定名
+     *            文件信息描述
      * @return 键值对的形式返回配置信息，值为具体的节点的配置信息
      */
-    public static final Map<String, Map<String, String>> readFileRecordWithNode(String file) {
-        log.info("read file: " + file);
+    public static final Map<String, Map<String, String>> readFileRecordWithNode(File file) {
+        log.info("read file: {}", file.getAbsolutePath());
         Map<String, Map<String, String>> returnMap = new LinkedHashMap<String, Map<String, String>>();
         Map<String, String> valueMap = null;
 
@@ -110,9 +124,22 @@ public class ConfFileUtil {
             }
         }
 
-        log.debug("file: " + file + ", content: " + returnMap.toString());
+        log.debug("file: {}, content: {}", file, returnMap);
 
         return returnMap;
+    }
+
+    /**
+     * 读取配置文件的信息，等价于{@code readFileRecordWithoutNode(new File(file))}
+     *
+     * @param file
+     *            需要读取的配置文件的完整路径
+     * @return 配置文件中记录的配置信息的键值对
+     * 
+     * @see #readFileRecordWithoutNode(File)
+     */
+    public static final Map<String, String> readFileRecordWithoutNode(String file) {
+        return readFileRecordWithoutNode(new File(file));
     }
 
     /**
@@ -122,11 +149,11 @@ public class ConfFileUtil {
      * 如果配置没有对应的值，那么会在结果的键值对记录中存储{@code null}值
      *
      * @param file
-     *            需要读取的配置文件的完整路径
+     *            需要读取的配置文件的信息描述
      * @return 配置文件中记录的配置信息的键值对
      */
-    public static final Map<String, String> readFileRecordWithoutNode(String file) {
-        log.info("read file: " + file);
+    public static final Map<String, String> readFileRecordWithoutNode(File file) {
+        log.info("read file: {}", file.getAbsolutePath());
         Map<String, String> valueMap = new LinkedHashMap<String, String>();
 
         List<String> content = FileIO.readLine(file);
@@ -142,7 +169,7 @@ public class ConfFileUtil {
             }
         }
 
-        log.debug("file: " + file + ", content: " + valueMap);
+        log.debug("file: {}, content: {}", file, valueMap);
 
         return valueMap;
     }
@@ -161,7 +188,7 @@ public class ConfFileUtil {
      */
     public static final void writeFileRecordWithNode(String file,
             Map<String, Map<String, String>> map) {
-        log.info("write file: " + file + ", node: " + map.toString());
+        log.info("write file: {}, node: {}", file, map);
         List<String> contentList = new LinkedList<>();
         for (Entry<String, Map<String, String>> entry : map.entrySet()) {
             String node = String.format(NODE_FORMAT, entry.getKey());
@@ -190,7 +217,7 @@ public class ConfFileUtil {
      * @see FileIO#writeFile(String, List) 输出到文件
      */
     public static final void writeFileRecordWithoutNode(String file, Map<String, String> map) {
-        log.info("write file: " + file + ", node: " + map.toString());
+        log.info("write file: {}, node: {}", file, map);
         List<String> contentList = new LinkedList<>();
         for (Entry<String, String> entry : map.entrySet()) {
             contentList.add(String.format(LINE_FORMAT, entry.getKey(), entry.getValue()));

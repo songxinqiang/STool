@@ -101,8 +101,7 @@ public class FileIO {
      * @see FileWriter#write(String)
      */
     public static final void writeFile(String file, List<String> content) {
-        log.info("write file:" + file + ", content:"
-                + Arrays.toString(content.toArray(new String[content.size()])));
+        log.info("write file: {}, content: {}", file, Arrays.toString(content.toArray()));
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
@@ -132,7 +131,7 @@ public class FileIO {
      * @see FileWriter#write(String)
      */
     public static final void writeFile(String file, String content) {
-        log.info("write file:" + file + ", content:" + content);
+        log.info("write file: {}, content: {}", file, content);
         FileWriter writer = null;
         try {
             writer = new FileWriter(file);
@@ -166,7 +165,7 @@ public class FileIO {
      * @see #readLine(File) 读取文件内容
      */
     public static final LinkedHashMap<Integer, List<String>> parseFile(File file, String regex) {
-        log.info("read file:" + file.getAbsolutePath() + ", with:" + regex);
+        log.info("read file: {}, with: {}", file.getAbsolutePath(), regex);
         LinkedHashMap<Integer, List<String>> map = new LinkedHashMap<>();
         Iterator<String> iterator = FileIO.readLine(file).iterator();
         for (int i = 0; iterator.hasNext(); i++) {

@@ -66,7 +66,7 @@ public final class SystemCmdExec {
      * @return 仅当操作成功返回true
      */
     public final boolean runCmd(String cmd) {
-        log.debug("run system cmd:[" + cmd + "]");
+        log.debug("run system cmd: {}", cmd);
 
         boolean flag = false;
 
@@ -74,7 +74,7 @@ public final class SystemCmdExec {
             run.exec(cmd);
             flag = true;
         } catch (Exception e) {
-            log.error("run system cmd error," + e.getMessage());
+            log.error("run system cmd error, {}", e.getMessage());
             flag = false;
         }
         return flag;
@@ -90,7 +90,7 @@ public final class SystemCmdExec {
      * @return 命令所产生的所有输出，等到输出完成后才会返回
      */
     public final List<String> runCmdForString(String cmd) {
-        log.debug("run system cmd for String:[" + cmd + "]");
+        log.debug("run system cmd for String: {}", cmd);
 
         List<String> strList = Collections.emptyList();
 
@@ -102,7 +102,7 @@ public final class SystemCmdExec {
             inBr = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             strList = inBr.lines().collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("run system cmd for String error," + e.getMessage());
+            log.error("run system cmd for String error, {}", e.getMessage());
         } finally {
             if (inBr != null) {
                 try {
@@ -131,7 +131,7 @@ public final class SystemCmdExec {
      * @return 命令所产生的所有输出，等到输出完成后才会返回
      */
     public final List<String> runCmdForString(String[] cmd) {
-        log.debug("run system cmd for String:[" + Arrays.toString(cmd) + "]");
+        log.debug("run system cmd for String: {}", Arrays.toString(cmd));
 
         List<String> strList = Collections.emptyList();
 
@@ -143,7 +143,7 @@ public final class SystemCmdExec {
             inBr = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
             strList = inBr.lines().collect(Collectors.toList());
         } catch (Exception e) {
-            log.error("run system cmd for String error," + e.getMessage());
+            log.error("run system cmd for String error, {}", e.getMessage());
         } finally {
             if (inBr != null) {
                 try {
