@@ -89,6 +89,19 @@ public class FileIO {
     }
 
     /**
+     * 写入到文件，一次一行，文件不存在会创建文件，会清空原有内容
+     *
+     * @param file
+     *            文件完整路径
+     * @param content
+     *            文件内容列表
+     * @see #writeFile(File, List)
+     */
+    public static final void writeFile(String file, List<String> content) {
+        writeFile(new File(file), content);
+    }
+
+    /**
      * 按照一次一行的方式写文件<br>
      * 会将文件中原有内容清除掉，所以需要在调用本方法传入的文件内容就会是调用后文件中的所有内容。
      * 文件写入时使用的行分隔符，使用的是和操作系统相关的分隔符,使用
@@ -100,7 +113,7 @@ public class FileIO {
      *            文件内容
      * @see FileWriter#write(String)
      */
-    public static final void writeFile(String file, List<String> content) {
+    public static final void writeFile(File file, List<String> content) {
         log.info("write file: {}, content: {}", file, Arrays.toString(content.toArray()));
         FileWriter writer = null;
         try {
@@ -122,6 +135,19 @@ public class FileIO {
     }
 
     /**
+     * 向文件中写入内容，清空原有内容，文件不存在时会新建文件
+     *
+     * @param file
+     *            文件完整路径
+     * @param content
+     *            内容
+     * @see #writeFile(File, String)
+     */
+    public static final void writeFile(String file, String content) {
+        writeFile(new File(file), content);
+    }
+
+    /**
      * 向文件中写入文本内容，会冲掉原本文件中的所有内容，如果文件不存在则会创建该文件
      *
      * @param file
@@ -130,7 +156,7 @@ public class FileIO {
      *            需要写入到文件中的内容
      * @see FileWriter#write(String)
      */
-    public static final void writeFile(String file, String content) {
+    public static final void writeFile(File file, String content) {
         log.info("write file: {}, content: {}", file, content);
         FileWriter writer = null;
         try {
