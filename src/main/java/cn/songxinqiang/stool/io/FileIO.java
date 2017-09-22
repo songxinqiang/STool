@@ -29,6 +29,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,7 +57,7 @@ public class FileIO {
     }
 
     /**
-     * 使用{@code UTF-8}的编码读取文件中的所有行，读取出错返回{@code null}
+     * 使用{@code UTF-8}的编码读取文件中的所有行，读取出错返回空列表
      *
      * @param file
      *            需要读取的文件
@@ -65,7 +66,7 @@ public class FileIO {
      * @see Files#readAllLines(java.nio.file.Path)
      */
     public static final List<String> readLine(File file) {
-        List<String> list = null;
+        List<String> list = Collections.emptyList();
         try {
             list = Files.readAllLines(file.toPath());
         } catch (IOException e) {
