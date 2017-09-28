@@ -81,6 +81,28 @@ public final class SystemCmdExec {
     }
 
     /**
+     * 执行系统命令，返回执行是否成功
+     * 
+     * @param cmd
+     *            命令
+     * @return 仅当操作成功返回true
+     */
+    public final boolean runCmd(String[] cmd) {
+        log.debug("run system cmd: {}", Arrays.toString(cmd));
+
+        boolean flag = false;
+
+        try {
+            run.exec(cmd);
+            flag = true;
+        } catch (Exception e) {
+            log.error("run system cmd error, {}", e.getMessage());
+            flag = false;
+        }
+        return flag;
+    }
+
+    /**
      * 执行系统命令返回结果字符串，返回结果输出的一个字符串列表<br>
      * 该方法会产生阻塞，等待执行结束后才会返回.<br>
      * 读取命令的输出结果时使用{@linkplain StandardCharsets#UTF_8}
