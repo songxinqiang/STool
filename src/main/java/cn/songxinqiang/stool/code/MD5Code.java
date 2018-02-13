@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2016 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright (c) 2014, 2018 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,10 @@
  */
 /*
  * 创建时间：2016年1月5日--下午6:02:42
- * 作者：阿信sxq(songxinqiang@vip.qq.com)
+ * 作者：宋信强(阿信sxq, songxinqiang@vip.qq.com, https://my.oschina.net/songxinqiang)
+ * <p>
+ * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
+ * </p>
  */
 package cn.songxinqiang.stool.code;
 
