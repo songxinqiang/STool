@@ -1,6 +1,6 @@
 /**
  * <pre>
- * Copyright 2014,2017 阿信sxq(songxinqiang@vip.qq.com).
+ * Copyright 2014,2018 阿信sxq(songxinqiang@vip.qq.com).
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,11 +41,7 @@ import org.slf4j.LoggerFactory;
  * 系统命令执行工具类，提供对系统命令的执行操作<br>
  * 执行系统命令，获取输出或者不获取输出，支持linux或者windows系统，输出已经处理了乱码的情况
  *
- * <p>
- * 众里寻她千百度, 蓦然回首, 那人却在灯火阑珊处.
- * </p>
- * 
- * @author 阿信sxq-2015年8月30日
+ * @author 阿信sxq
  *
  */
 public final class SystemCmdExec {
@@ -122,19 +118,22 @@ public final class SystemCmdExec {
             Process p = run.exec(cmd);
             in = new BufferedInputStream(p.getInputStream());
             inBr = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            strList = inBr.lines().collect(Collectors.toList());
+            strList = inBr.lines()
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("run system cmd for String error, {}", e.getMessage());
         } finally {
             if (inBr != null) {
                 try {
                     inBr.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
             }
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
             }
             inBr = null;
             in = null;
@@ -163,25 +162,69 @@ public final class SystemCmdExec {
             Process p = run.exec(cmd);
             in = new BufferedInputStream(p.getInputStream());
             inBr = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            strList = inBr.lines().collect(Collectors.toList());
+            strList = inBr.lines()
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             log.error("run system cmd for String error, {}", e.getMessage());
         } finally {
             if (inBr != null) {
                 try {
                     inBr.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
             }
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
             }
             inBr = null;
             in = null;
         }
 
         return strList;
+    }
+
+    /**
+     * 执行系统命令返回退出代码，<br>
+     * 该方法会产生阻塞，等待执行结束后才会返回.
+     * 
+     * @param cmd
+     *            命令
+     * @return 命令的退出代码，等到执行完成后才会返回，在程序出错时返回{@code null}
+     */
+    public final Integer runCmdForExitCode(String cmd) {
+        log.debug("run system cmd for exit code: {}", cmd);
+
+        try {
+            Process p = run.exec(cmd);
+            return p.waitFor();
+        } catch (IOException | InterruptedException e) {
+            log.error("run system cmd for exit code error, {}", e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 执行系统命令返回退出代码，<br>
+     * 该方法会产生阻塞，等待执行结束后才会返回.
+     * 
+     * @param cmd
+     *            命令及参数数组
+     * @return 命令的退出代码，等到执行完成后才会返回，在程序出错时返回{@code null}
+     */
+    public final Integer runCmdForExitCode(String[] cmd) {
+        log.debug("run system cmd for exit code: {}", Arrays.toString(cmd));
+
+        try {
+            Process p = run.exec(cmd);
+            return p.waitFor();
+        } catch (IOException | InterruptedException e) {
+            log.error("run system cmd for exit code error, {}", e.getMessage());
+        }
+
+        return null;
     }
 
 }
