@@ -199,8 +199,7 @@ public final class SystemCmdExec {
 
         try {
             Process p = run.exec(cmd);
-            p.waitFor();
-            return p.exitValue();
+            return p.waitFor();
         } catch (IOException | InterruptedException e) {
             log.error("run system cmd for exit code error, {}", e.getMessage());
         }
@@ -220,8 +219,7 @@ public final class SystemCmdExec {
 
         try {
             Process p = run.exec(cmd);
-            p.waitFor();
-            return p.exitValue();
+            return p.waitFor();
         } catch (IOException | InterruptedException e) {
             log.error("run system cmd for exit code error, {}", e.getMessage());
         }
